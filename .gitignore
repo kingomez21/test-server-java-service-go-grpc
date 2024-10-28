@@ -1,0 +1,7 @@
+.air.toml
+.env
+*.exe
+tmp
+*.crt
+*.csr
+*.pem

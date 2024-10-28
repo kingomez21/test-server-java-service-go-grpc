@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package task;
+
+option go_package = "task/taskservice";
+
+option java_package = "com.taskcrud.protos";
+
+service Hello {
+    rpc SayHello (Request) returns (Response);
+    rpc CreateTask (TaskCreate) returns (Response);
+    rpc GetTask (Empty) returns (ListTask);
+    rpc UpdatedTask (TaskCreate) returns (Response);
+    rpc GetUsers (Empty) returns (ListUser);
+    rpc CreateUser (User) returns (Response);
+    rpc UpdatedUser (User) returns (Response);
+
+}
+
+message Empty {}
+
+message TaskCreate {
+    optional string id = 1;
+    string name = 2;
+    string description = 3;
+    string date = 4;
+    bool done = 5;
+}
+
+message Task {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string date = 4;
+    bool done = 5;
+    string createdAt = 6;
+    string updatedAt = 7;
+}
+
+message ListTask {
+    repeated Task tasks = 1;
+}
+
+message User {
+    optional string id = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string email = 4;
+    string address = 5;
+}
+
+message ListUser {
+    repeated User users = 1;
+}
+
+message Request {
+    string name = 1;
+}
+
+message Response {
+    string message = 1;
+}
