@@ -19,329 +19,177 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Hello_SayHello_FullMethodName    = "/task.Hello/SayHello"
-	Hello_CreateTask_FullMethodName  = "/task.Hello/CreateTask"
-	Hello_GetTask_FullMethodName     = "/task.Hello/GetTask"
-	Hello_UpdatedTask_FullMethodName = "/task.Hello/UpdatedTask"
-	Hello_GetUsers_FullMethodName    = "/task.Hello/GetUsers"
-	Hello_CreateUser_FullMethodName  = "/task.Hello/CreateUser"
-	Hello_UpdatedUser_FullMethodName = "/task.Hello/UpdatedUser"
+	TaskService_CreateTask_FullMethodName  = "/task.TaskService/CreateTask"
+	TaskService_GetTask_FullMethodName     = "/task.TaskService/GetTask"
+	TaskService_UpdatedTask_FullMethodName = "/task.TaskService/UpdatedTask"
 )
 
-// HelloClient is the client API for Hello service.
+// TaskServiceClient is the client API for TaskService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type HelloClient interface {
-	SayHello(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+type TaskServiceClient interface {
 	CreateTask(ctx context.Context, in *TaskCreate, opts ...grpc.CallOption) (*Response, error)
 	GetTask(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListTask, error)
 	UpdatedTask(ctx context.Context, in *TaskCreate, opts ...grpc.CallOption) (*Response, error)
-	GetUsers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListUser, error)
-	CreateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
-	UpdatedUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error)
 }
 
-type helloClient struct {
+type taskServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHelloClient(cc grpc.ClientConnInterface) HelloClient {
-	return &helloClient{cc}
+func NewTaskServiceClient(cc grpc.ClientConnInterface) TaskServiceClient {
+	return &taskServiceClient{cc}
 }
 
-func (c *helloClient) SayHello(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (c *taskServiceClient) CreateTask(ctx context.Context, in *TaskCreate, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, Hello_SayHello_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TaskService_CreateTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *helloClient) CreateTask(ctx context.Context, in *TaskCreate, opts ...grpc.CallOption) (*Response, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
-	err := c.cc.Invoke(ctx, Hello_CreateTask_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *helloClient) GetTask(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListTask, error) {
+func (c *taskServiceClient) GetTask(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListTask, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListTask)
-	err := c.cc.Invoke(ctx, Hello_GetTask_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TaskService_GetTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *helloClient) UpdatedTask(ctx context.Context, in *TaskCreate, opts ...grpc.CallOption) (*Response, error) {
+func (c *taskServiceClient) UpdatedTask(ctx context.Context, in *TaskCreate, opts ...grpc.CallOption) (*Response, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Response)
-	err := c.cc.Invoke(ctx, Hello_UpdatedTask_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TaskService_UpdatedTask_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *helloClient) GetUsers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListUser, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListUser)
-	err := c.cc.Invoke(ctx, Hello_GetUsers_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *helloClient) CreateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
-	err := c.cc.Invoke(ctx, Hello_CreateUser_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *helloClient) UpdatedUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*Response, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Response)
-	err := c.cc.Invoke(ctx, Hello_UpdatedUser_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// HelloServer is the server API for Hello service.
-// All implementations must embed UnimplementedHelloServer
+// TaskServiceServer is the server API for TaskService service.
+// All implementations must embed UnimplementedTaskServiceServer
 // for forward compatibility.
-type HelloServer interface {
-	SayHello(context.Context, *Request) (*Response, error)
+type TaskServiceServer interface {
 	CreateTask(context.Context, *TaskCreate) (*Response, error)
 	GetTask(context.Context, *Empty) (*ListTask, error)
 	UpdatedTask(context.Context, *TaskCreate) (*Response, error)
-	GetUsers(context.Context, *Empty) (*ListUser, error)
-	CreateUser(context.Context, *User) (*Response, error)
-	UpdatedUser(context.Context, *User) (*Response, error)
-	mustEmbedUnimplementedHelloServer()
+	mustEmbedUnimplementedTaskServiceServer()
 }
 
-// UnimplementedHelloServer must be embedded to have
+// UnimplementedTaskServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedHelloServer struct{}
+type UnimplementedTaskServiceServer struct{}
 
-func (UnimplementedHelloServer) SayHello(context.Context, *Request) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
-}
-func (UnimplementedHelloServer) CreateTask(context.Context, *TaskCreate) (*Response, error) {
+func (UnimplementedTaskServiceServer) CreateTask(context.Context, *TaskCreate) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateTask not implemented")
 }
-func (UnimplementedHelloServer) GetTask(context.Context, *Empty) (*ListTask, error) {
+func (UnimplementedTaskServiceServer) GetTask(context.Context, *Empty) (*ListTask, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTask not implemented")
 }
-func (UnimplementedHelloServer) UpdatedTask(context.Context, *TaskCreate) (*Response, error) {
+func (UnimplementedTaskServiceServer) UpdatedTask(context.Context, *TaskCreate) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatedTask not implemented")
 }
-func (UnimplementedHelloServer) GetUsers(context.Context, *Empty) (*ListUser, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUsers not implemented")
-}
-func (UnimplementedHelloServer) CreateUser(context.Context, *User) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
-}
-func (UnimplementedHelloServer) UpdatedUser(context.Context, *User) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatedUser not implemented")
-}
-func (UnimplementedHelloServer) mustEmbedUnimplementedHelloServer() {}
-func (UnimplementedHelloServer) testEmbeddedByValue()               {}
+func (UnimplementedTaskServiceServer) mustEmbedUnimplementedTaskServiceServer() {}
+func (UnimplementedTaskServiceServer) testEmbeddedByValue()                     {}
 
-// UnsafeHelloServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HelloServer will
+// UnsafeTaskServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TaskServiceServer will
 // result in compilation errors.
-type UnsafeHelloServer interface {
-	mustEmbedUnimplementedHelloServer()
+type UnsafeTaskServiceServer interface {
+	mustEmbedUnimplementedTaskServiceServer()
 }
 
-func RegisterHelloServer(s grpc.ServiceRegistrar, srv HelloServer) {
-	// If the following call pancis, it indicates UnimplementedHelloServer was
+func RegisterTaskServiceServer(s grpc.ServiceRegistrar, srv TaskServiceServer) {
+	// If the following call pancis, it indicates UnimplementedTaskServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Hello_ServiceDesc, srv)
+	s.RegisterService(&TaskService_ServiceDesc, srv)
 }
 
-func _Hello_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(HelloServer).SayHello(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Hello_SayHello_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).SayHello(ctx, req.(*Request))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Hello_CreateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaskService_CreateTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TaskCreate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloServer).CreateTask(ctx, in)
+		return srv.(TaskServiceServer).CreateTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Hello_CreateTask_FullMethodName,
+		FullMethod: TaskService_CreateTask_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).CreateTask(ctx, req.(*TaskCreate))
+		return srv.(TaskServiceServer).CreateTask(ctx, req.(*TaskCreate))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Hello_GetTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaskService_GetTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloServer).GetTask(ctx, in)
+		return srv.(TaskServiceServer).GetTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Hello_GetTask_FullMethodName,
+		FullMethod: TaskService_GetTask_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).GetTask(ctx, req.(*Empty))
+		return srv.(TaskServiceServer).GetTask(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Hello_UpdatedTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TaskService_UpdatedTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TaskCreate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HelloServer).UpdatedTask(ctx, in)
+		return srv.(TaskServiceServer).UpdatedTask(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Hello_UpdatedTask_FullMethodName,
+		FullMethod: TaskService_UpdatedTask_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).UpdatedTask(ctx, req.(*TaskCreate))
+		return srv.(TaskServiceServer).UpdatedTask(ctx, req.(*TaskCreate))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Hello_GetUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(HelloServer).GetUsers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Hello_GetUsers_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).GetUsers(ctx, req.(*Empty))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Hello_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(User)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(HelloServer).CreateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Hello_CreateUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).CreateUser(ctx, req.(*User))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Hello_UpdatedUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(User)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(HelloServer).UpdatedUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Hello_UpdatedUser_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HelloServer).UpdatedUser(ctx, req.(*User))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// Hello_ServiceDesc is the grpc.ServiceDesc for Hello service.
+// TaskService_ServiceDesc is the grpc.ServiceDesc for TaskService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Hello_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "task.Hello",
-	HandlerType: (*HelloServer)(nil),
+var TaskService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "task.TaskService",
+	HandlerType: (*TaskServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _Hello_SayHello_Handler,
-		},
-		{
 			MethodName: "CreateTask",
-			Handler:    _Hello_CreateTask_Handler,
+			Handler:    _TaskService_CreateTask_Handler,
 		},
 		{
 			MethodName: "GetTask",
-			Handler:    _Hello_GetTask_Handler,
+			Handler:    _TaskService_GetTask_Handler,
 		},
 		{
 			MethodName: "UpdatedTask",
-			Handler:    _Hello_UpdatedTask_Handler,
-		},
-		{
-			MethodName: "GetUsers",
-			Handler:    _Hello_GetUsers_Handler,
-		},
-		{
-			MethodName: "CreateUser",
-			Handler:    _Hello_CreateUser_Handler,
-		},
-		{
-			MethodName: "UpdatedUser",
-			Handler:    _Hello_UpdatedUser_Handler,
+			Handler:    _TaskService_UpdatedTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

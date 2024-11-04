@@ -4,16 +4,13 @@ package task;
 
 option go_package = "task/taskservice";
 
-option java_package = "com.taskcrud.protos";
+option java_package = "com.taskservice.protos";
+option java_outer_classname = "TaskServiceProto";
 
-service Hello {
-    rpc SayHello (Request) returns (Response);
+service TaskService {
     rpc CreateTask (TaskCreate) returns (Response);
     rpc GetTask (Empty) returns (ListTask);
     rpc UpdatedTask (TaskCreate) returns (Response);
-    rpc GetUsers (Empty) returns (ListUser);
-    rpc CreateUser (User) returns (Response);
-    rpc UpdatedUser (User) returns (Response);
 
 }
 
@@ -41,17 +38,6 @@ message ListTask {
     repeated Task tasks = 1;
 }
 
-message User {
-    optional string id = 1;
-    string firstname = 2;
-    string lastname = 3;
-    string email = 4;
-    string address = 5;
-}
-
-message ListUser {
-    repeated User users = 1;
-}
 
 message Request {
     string name = 1;

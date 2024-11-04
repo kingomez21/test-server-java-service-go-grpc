@@ -1,5 +1,7 @@
 package com.taskcrud.server.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,29 +9,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.taskcrud.server.dtos.TaskDTO;
-import com.taskcrud.server.service.TaskService;
-
-import java.util.List;
+import com.taskcrud.server.dtos.UserDTO;
+import com.taskcrud.server.service.UserService;
 
 @RestController
-public class TaskControllers {
-
-    private TaskService tasks = new TaskService();
+public class UserControllers {
     
+    private UserService users = new UserService();
 
-    @GetMapping("/tasks")
-    public List<TaskDTO> getUsers(){
+
+    @GetMapping("/users")
+    public List<UserDTO> getUsers(){
         
-        return tasks.getTask();
+        return users.getUsers();
     }
 
-    @PostMapping("/task")
-    public ResponseEntity<String> crearUsuario(@RequestBody TaskDTO taskDTO){
+    @PostMapping("/user")
+    public ResponseEntity<String> crearUsuario(@RequestBody UserDTO userDTO){
 
-        String result = tasks.createTask(taskDTO);
+        String result = users.createUser(userDTO);
 
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
 }

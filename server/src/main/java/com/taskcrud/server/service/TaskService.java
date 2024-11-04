@@ -1,24 +1,24 @@
 package com.taskcrud.server.service;
 
-import com.taskcrud.protos.HelloGrpc;
-import com.taskcrud.protos.HelloGrpc.HelloBlockingStub;
-import com.taskcrud.protos.TaskService.Empty;
-import com.taskcrud.protos.TaskService.ListUser;
-import com.taskcrud.protos.TaskService.Request;
-import com.taskcrud.protos.TaskService.Response;
-import com.taskcrud.protos.TaskService.User;
-import com.taskcrud.server.dtos.UserDTO;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.taskcrud.server.dtos.TaskDTO;
+import com.taskservice.protos.TaskServiceGrpc;
+import com.taskservice.protos.TaskServiceGrpc.TaskServiceBlockingStub;
+import com.taskservice.protos.TaskServiceProto.Empty;
+import com.taskservice.protos.TaskServiceProto.ListTask;
+import com.taskservice.protos.TaskServiceProto.Response;
+import com.taskservice.protos.TaskServiceProto.TaskCreate;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class TaskService {
     
-    private final HelloBlockingStub blockingStub;
+    private final TaskServiceBlockingStub blockingStub;
 
     public TaskService(){
         String target = "localhost:50051"; // Dirección del servidor gRPC
@@ -26,64 +26,52 @@ public class TaskService {
                 .usePlaintext() // Desactiva SSL para la conexión (útil para desarrollo)
                 .build();
 
-        blockingStub = HelloGrpc.newBlockingStub(channel);
+        blockingStub = TaskServiceGrpc.newBlockingStub(channel);
     }
 
-    public String sayHello(String saludo){
-
-        Request req = Request.newBuilder().setName(saludo).build();
-        Response res;
-
-        try {
-            res = blockingStub.sayHello(req);
-            return res.getMessage();
-        } catch (StatusRuntimeException e) {
-            System.out.println("RPC failed: " + e.getStatus());
-        }
-
-        return "";
-    }
-
-    public List<UserDTO> getUsers(){
+    public List<TaskDTO> getTask(){
         Empty empty = Empty.newBuilder().build();
-        ListUser res;
-        
+        ListTask res;
+
         try {
-            res = blockingStub.getUsers(empty);
             
-            return res.getUsersList().stream()
-                .map(usuario -> new UserDTO(usuario.getId(), usuario.getFirstname(), usuario.getLastname(), usuario.getEmail(), usuario.getAddress()))
-                .collect(Collectors.toList());
+            res = blockingStub.getTask(empty);
+
+            return res.getTasksList().stream()
+            .map(task -> new TaskDTO(task.getId(), task.getName(), task.getDescription(), task.getDate(), task.getDone()))
+            .collect(Collectors.toList());
+
         } catch (StatusRuntimeException e) {
-            System.out.println("RPC failed: " + e.getStatus());
+            System.err.println("error" + e.getMessage());
         }
 
         return null;
-        
-    }
 
-    public String createUser(UserDTO userDTO){
+    } 
 
-        User user = User.newBuilder()
-         .setFirstname(userDTO.getFirstname())
-         .setLastname(userDTO.getLastname())
-         .setEmail(userDTO.getEmail())
-         .setAddress(userDTO.getAddress())
-         .build();
+    public String createTask(TaskDTO taskDTO){
+
+        TaskCreate taskCreate = TaskCreate.newBuilder()
+            .setName(taskDTO.getName())
+            .setDescription(taskDTO.getDescription())
+            .setDate(taskDTO.getDate())
+            .setDone(taskDTO.getDone())
+            .build();
 
         Response res;
 
-         try {
+        try {
 
-            res = blockingStub.createUser(user);
+            res = blockingStub.createTask(taskCreate);
 
             return res.getMessage();
             
-         }catch (StatusRuntimeException e) {
-            System.out.println("RPC failed: " + e.getStatus());
+        } catch (StatusRuntimeException e) {
+            System.err.println("error" + e.getMessage());
         }
 
         return null;
-
     }
+
+    
 }

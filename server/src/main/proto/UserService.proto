@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "task/userservice";
+
+option java_package = "com.userservice.protos";
+option java_outer_classname = "UserServiceProto";
+
+
+service UserService {
+    rpc GetUsers (Empty) returns (ListUser);
+    rpc CreateUser (User) returns (Response);
+    rpc UpdatedUser (User) returns (Response);
+
+}
+
+message Empty {}
+
+message User {
+    optional string id = 1;
+    string firstname = 2;
+    string lastname = 3;
+    string email = 4;
+    string address = 5;
+}
+
+message ListUser {
+    repeated User users = 1;
+}
+
+message Request {
+    string name = 1;
+}
+
+message Response {
+    string message = 1;
+}
