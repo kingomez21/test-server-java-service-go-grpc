@@ -15,13 +15,20 @@ import com.taskcrud.server.service.UserService;
 @RestController
 public class UserControllers {
     
-    private UserService users = new UserService();
+    private UserService users = new UserService("localhost:50051");
+    private UserService users_py = new UserService("localhost:50052");
 
 
     @GetMapping("/users")
     public List<UserDTO> getUsers(){
         
         return users.getUsers();
+    }
+
+    @GetMapping("/users_py")
+    public List<UserDTO> getUsersPy(){
+        
+        return users_py.getUsers();
     }
 
     @PostMapping("/user")

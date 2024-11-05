@@ -21,8 +21,7 @@ public class UserService {
 
     private final UserServiceBlockingStub blockingStub;
 
-    public UserService(){
-        String target = "localhost:50051";
+    public UserService(String target){
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
             .usePlaintext()
             .build();
