@@ -5,7 +5,7 @@ list_proto_files = [
     "UserService.proto"
 ]
 
-ruta_protos = "../server/src/main/proto"
+ruta_protos = "../proto"
 
 ruta_python = "../services/reports/services"
 

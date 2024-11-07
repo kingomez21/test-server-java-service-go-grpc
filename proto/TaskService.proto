@@ -4,17 +4,19 @@ package task;
 
 option go_package = "task/taskservice";
 
+option csharp_namespace = "Logic";
+
 option java_package = "com.taskservice.protos";
 option java_outer_classname = "TaskServiceProto";
 
 service TaskService {
-    rpc CreateTask (TaskCreate) returns (Response);
-    rpc GetTask (Empty) returns (ListTask);
-    rpc UpdatedTask (TaskCreate) returns (Response);
+    rpc CreateTask (TaskCreate) returns (ResponseTask);
+    rpc GetTask (EmptyMessageTask) returns (ListTask);
+    rpc UpdatedTask (TaskCreate) returns (ResponseTask);
 
 }
 
-message Empty {}
+message EmptyMessageTask {}
 
 message TaskCreate {
     optional string id = 1;
@@ -39,10 +41,10 @@ message ListTask {
 }
 
 
-message Request {
+message RequestTask {
     string name = 1;
 }
 
-message Response {
+message ResponseTask {
     string message = 1;
 }

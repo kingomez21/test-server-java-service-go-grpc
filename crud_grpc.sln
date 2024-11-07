@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{64C39D66-BE1A-466B-90F2-101686680B49}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic", "services\Logic\Logic.csproj", "{542D0ECB-4A09-4266-8BF8-5D3528F055EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{542D0ECB-4A09-4266-8BF8-5D3528F055EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542D0ECB-4A09-4266-8BF8-5D3528F055EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542D0ECB-4A09-4266-8BF8-5D3528F055EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542D0ECB-4A09-4266-8BF8-5D3528F055EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{542D0ECB-4A09-4266-8BF8-5D3528F055EA} = {64C39D66-BE1A-466B-90F2-101686680B49}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {732F5664-48E4-4D5C-8DEC-265951DE78EF}
+	EndGlobalSection
+EndGlobal

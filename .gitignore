@@ -7,3 +7,5 @@ tmp
 *.pem
 /env
 __pycache__
+bin
+obj

@@ -4,18 +4,20 @@ package user;
 
 option go_package = "task/userservice";
 
+option csharp_namespace = "Logic";
+
 option java_package = "com.userservice.protos";
 option java_outer_classname = "UserServiceProto";
 
 
 service UserService {
-    rpc GetUsers (Empty) returns (ListUser);
-    rpc CreateUser (User) returns (Response);
-    rpc UpdatedUser (User) returns (Response);
+    rpc GetUsers (EmptyUser) returns (ListUser);
+    rpc CreateUser (User) returns (ResponseUser);
+    rpc UpdatedUser (User) returns (ResponseUser);
 
 }
 
-message Empty {}
+message EmptyUser {}
 
 message User {
     optional string id = 1;
@@ -29,10 +31,10 @@ message ListUser {
     repeated User users = 1;
 }
 
-message Request {
+message RequestUser {
     string name = 1;
 }
 
-message Response {
+message ResponseUser {
     string message = 1;
 }

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.taskcrud.server.dtos.UserDTO;
-import com.userservice.protos.UserServiceProto.Empty;
-import com.userservice.protos.UserServiceProto.Response;
+import com.userservice.protos.UserServiceProto.EmptyUser;
+import com.userservice.protos.UserServiceProto.ResponseUser;
 import com.userservice.protos.UserServiceGrpc;
 import com.userservice.protos.UserServiceGrpc.UserServiceBlockingStub;
 import com.userservice.protos.UserServiceProto.ListUser;
@@ -30,7 +30,7 @@ public class UserService {
     }
     
     public List<UserDTO> getUsers(){
-        Empty empty = Empty.newBuilder().build();
+        EmptyUser empty = EmptyUser.newBuilder().build();
         ListUser res;
         
         try {
@@ -56,7 +56,7 @@ public class UserService {
          .setAddress(userDTO.getAddress())
          .build();
 
-        Response res;
+        ResponseUser res;
 
          try {
 

@@ -15,13 +15,20 @@ import java.util.List;
 @RestController
 public class TaskControllers {
 
-    private TaskService tasks = new TaskService();
+    private TaskService tasks = new TaskService("localhost:50051");
+    private TaskService tasksLogic = new TaskService("localhost:5038");
     
 
     @GetMapping("/tasks")
     public List<TaskDTO> getUsers(){
         
         return tasks.getTask();
+    }
+
+    @GetMapping("/logic/task")
+    public List<TaskDTO> logicTask(){
+        //System.out.println(tasksLogic.getTask());
+        return tasksLogic.getTask();
     }
 
     @PostMapping("/task")

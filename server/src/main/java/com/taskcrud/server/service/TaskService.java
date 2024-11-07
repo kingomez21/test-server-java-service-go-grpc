@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 import com.taskcrud.server.dtos.TaskDTO;
 import com.taskservice.protos.TaskServiceGrpc;
 import com.taskservice.protos.TaskServiceGrpc.TaskServiceBlockingStub;
-import com.taskservice.protos.TaskServiceProto.Empty;
+import com.taskservice.protos.TaskServiceProto.EmptyMessageTask;
 import com.taskservice.protos.TaskServiceProto.ListTask;
-import com.taskservice.protos.TaskServiceProto.Response;
+import com.taskservice.protos.TaskServiceProto.ResponseTask;
 import com.taskservice.protos.TaskServiceProto.TaskCreate;
 
 import io.grpc.ManagedChannel;
@@ -20,8 +20,8 @@ public class TaskService {
     
     private final TaskServiceBlockingStub blockingStub;
 
-    public TaskService(){
-        String target = "localhost:50051"; // Dirección del servidor gRPC
+    public TaskService(String target){
+        
         ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
                 .usePlaintext() // Desactiva SSL para la conexión (útil para desarrollo)
                 .build();
@@ -30,7 +30,7 @@ public class TaskService {
     }
 
     public List<TaskDTO> getTask(){
-        Empty empty = Empty.newBuilder().build();
+        EmptyMessageTask empty = EmptyMessageTask.newBuilder().build();
         ListTask res;
 
         try {
@@ -58,7 +58,7 @@ public class TaskService {
             .setDone(taskDTO.getDone())
             .build();
 
-        Response res;
+        ResponseTask res;
 
         try {
 
