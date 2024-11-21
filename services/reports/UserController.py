@@ -22,6 +22,9 @@ class UserController(UserServicesGrpc.UserServiceServicer):
 
     def GetUsers(self, request, context):
 
+        print(f"Protocolo: {context.peer()}")
+        print(f"Metadatos: {context.invocation_metadata()}")
+
         global user_data
         data = []
 

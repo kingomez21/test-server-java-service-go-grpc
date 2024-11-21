@@ -19,11 +19,47 @@ public class TaskServicer : TaskService.TaskServiceBase
 
     public override async Task<ListTask> GetTask(EmptyMessageTask request, ServerCallContext context)
     {
-        Console.WriteLine(context);
+
         var tasks = new ListTask
         {
             Tasks =
             {
+                new Task
+                {
+                    Id = "1",
+                    Name = "Example Task",
+                    Description = "This is an example task",
+                    Date = "2024-01-01",
+                    Done = false,
+                    
+                },
+                new Task
+                {
+                    Id = "1",
+                    Name = "Example Task",
+                    Description = "This is an example task",
+                    Date = "2024-01-01",
+                    Done = false,
+                    
+                },
+                new Task
+                {
+                    Id = "1",
+                    Name = "Example Task",
+                    Description = "This is an example task",
+                    Date = "2024-01-01",
+                    Done = false,
+                    
+                },
+                new Task
+                {
+                    Id = "1",
+                    Name = "Example Task",
+                    Description = "This is an example task",
+                    Date = "2024-01-01",
+                    Done = false,
+                    
+                },
                 new Task
                 {
                     Id = "1",

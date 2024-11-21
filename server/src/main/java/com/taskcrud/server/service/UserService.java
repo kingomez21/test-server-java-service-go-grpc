@@ -1,8 +1,11 @@
 package com.taskcrud.server.service;
 
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.net.ssl.SSLException;
 
 import com.taskcrud.server.dtos.UserDTO;
 import com.userservice.protos.UserServiceProto.EmptyUser;
@@ -15,6 +18,8 @@ import com.userservice.protos.UserServiceProto.User;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
 
 
 public class UserService {
@@ -22,9 +27,26 @@ public class UserService {
     private final UserServiceBlockingStub blockingStub;
 
     public UserService(String target){
-        ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
-            .usePlaintext()
-            .build();
+        InputStream certStream = UserService.class.getClassLoader().getResourceAsStream("certs/cert.crt");
+
+        if (certStream == null) {
+            throw new IllegalStateException("Certificado no encontrado en certs.");
+        }
+
+        ManagedChannel channel = null;
+        try {
+            channel = NettyChannelBuilder.forAddress("localhost", 50051)
+                    .sslContext(GrpcSslContexts.forClient().trustManager(certStream).build())
+                    .build();
+        } catch (SSLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+
+        /*ManagedChannel channel = ManagedChannelBuilder.forTarget(target)
+            .sslContext(GrpcSslContexts.forClient().trustManager(certStream).build())
+            .build();*/
 
         blockingStub = UserServiceGrpc.newBlockingStub(channel);
     }
